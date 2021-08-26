@@ -1,0 +1,15 @@
+#Request : expects gimbal attitude/rate setpoint in radians via roll, pitch, yaw. mode: 0 - angle control, 1 - relative angle control, 2 - rate control
+#Response : return success=true if command is successfully sent 
+
+int8 MODE_ANGLE_ABS = 0
+int8 MODE_ANGLE_REL = 1
+int8 MODE_ANGLE_RATE = 2
+
+float32 roll
+float32 pitch
+float32 yaw
+float32 time
+int8 mode
+---
+bool success
+string message

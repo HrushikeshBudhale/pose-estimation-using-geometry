@@ -1,0 +1,6 @@
+<launch>
+    <group>
+        <node pkg="bar_detector" type="bar_detector_node.py" name="BarDetector"  output="screen">
+        </node>
+    </group>
+</launch>

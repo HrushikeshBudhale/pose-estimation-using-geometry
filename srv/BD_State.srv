@@ -1,0 +1,19 @@
+#Request :  To start, Start_Resume value should be True, drone position should be mentioned in wh frame with X,Y,Z in meter and Yaw in radian.
+#           Yaw value should be, 0: drone facing left rack, 3.142: drone facing right rack or anything in between
+#           To pause, send req with Start_Resume: false
+#           To resume, send req with  Start_Resume: true
+#           To resume after switching rack, RackSwitch should be true
+#           To switching gimbal, GimbalSwitch should be true (works irrespecive of paused or running state)
+#Response : return success=true if command is successfully sent
+
+bool Start_Resume
+float32 X
+float32 Y
+float32 Z
+float32 Yaw
+bool RackSwitch
+bool GimbalSwitch
+bool Stop
+---
+bool success
+string message
