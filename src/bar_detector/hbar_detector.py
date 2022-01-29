@@ -7,11 +7,6 @@ import numpy as np
 import math
 
 
-# Romark level_height = 1.4
-# Romark expected aisle_width = 1.9812
-# Mahindra level_height = 1.2
-# Mahindra aisle_width = 3.4
-
 class HBar_Detector:
     def __init__(self, pdp, rs):
         self.dp = pdp

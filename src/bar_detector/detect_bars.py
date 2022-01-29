@@ -2,7 +2,6 @@
 # Author: Hrushikesh
 __author__ = "Hrushikesh"
 
-# from flytware_libs.capabilities.drone_state_manager.drone_state_manager import DroneStateManager
 from bar_detector.hbar_detector import HBar_Detector
 from bar_detector.vbar_detector import VBar_Detector
 from bar_detector.srv import UpdateCkpt, UpdateCkptResponse, BD_State, BD_StateResponse
@@ -140,7 +139,7 @@ class BarDetector:
         self.processed = True   # use without dl
         self.ckpt_y = 0
 
-        self.state_change_srv = rospy.Service('/flytware/bar_detection/change_state', BD_State, self.state_change_cb)
+        self.state_change_srv = rospy.Service('/drone_proj/bar_detection/change_state', BD_State, self.state_change_cb)
 
         # self.init_subs_pubs_srvs()
         # self.init_subs_pubs_srvs_dl()
@@ -236,9 +235,9 @@ class BarDetector:
 
     def init_subs_pubs_srvs(self):      # without DL
         if self.compressed:
-            self.img_sub = rospy.Subscriber('/flytos/flytcam/image_raw/compressed', CompressedImage, self.get_inference)
+            self.img_sub = rospy.Subscriber('/drone/drone_cam/image_raw/compressed', CompressedImage, self.get_inference)
         else:
-            self.img_sub = rospy.Subscriber('/flytos/flytcam/image_raw', Image, self.get_inference)
+            self.img_sub = rospy.Subscriber('/drone/drone_cam/image_raw', Image, self.get_inference)
 
         ####### Start Pubs ######
         self.results_pub = rospy.Publisher('/bar_detector/lines', BarDetectionResult, queue_size=1)
@@ -247,8 +246,8 @@ class BarDetector:
         self.debug_pub = rospy.Publisher('bar_detector/other', Pose, queue_size=1)
         self.detection_img_pub = rospy.Publisher('bar_detector/detection_overlay', Image, queue_size=1)
 
-        self.update_ckpt_srv = rospy.Service('/flytware/bar_detection/update_ckpt', UpdateCkpt, self.update_ckpt_cb)
-        # self.toggle_dir_srv = rospy.Service('/flytware/bar_detection/toggle_bd_dir', ToggleDir, self.switch_direction)
+        self.update_ckpt_srv = rospy.Service('/drone_proj/bar_detection/update_ckpt', UpdateCkpt, self.update_ckpt_cb)
+        # self.toggle_dir_srv = rospy.Service('/drone_proj/bar_detection/toggle_bd_dir', ToggleDir, self.switch_direction)
 
     def init_subs_pubs_srvs_dl(self):      # with DL
 
@@ -272,9 +271,9 @@ class BarDetector:
             return True
 
         if self.compressed:
-            self.img_sub = rospy.Subscriber('/flytos/flytcam/image_raw/compressed', CompressedImage, self.get_inference_dl)
+            self.img_sub = rospy.Subscriber('/drone/drone_cam/image_raw/compressed', CompressedImage, self.get_inference_dl)
         else:
-            self.img_sub = rospy.Subscriber('/flytos/flytcam/image_raw', Image, self.get_inference_dl)
+            self.img_sub = rospy.Subscriber('/drone/drone_cam/image_raw', Image, self.get_inference_dl)
             # self.img_sub = rospy.Subscriber('/video_stream/input', Image, self.get_inference_dl)
 
         self.pub_for_vmask = rospy.Publisher('/kittiseg_vbar_aisle_view/video_stream/input', Image, queue_size=1)
@@ -288,12 +287,12 @@ class BarDetector:
         ts.registerCallback(self.detect_lines)
 
         self.results_pub = rospy.Publisher('/bar_detector/lines', BarDetectionResult, queue_size=1)
-        self.pose_pub = rospy.Publisher('/flytos/mavros/local_position/local_tag', TwistStamped, queue_size=1)
-        self.drone_yaw_pub = rospy.Publisher('/flytos/yaw_publisher/yaw', TwistStamped, queue_size=1)
+        self.pose_pub = rospy.Publisher('/drone/mavros/local_position/local_tag', TwistStamped, queue_size=1)
+        self.drone_yaw_pub = rospy.Publisher('/drone/yaw_publisher/yaw', TwistStamped, queue_size=1)
         self.debug_pub = rospy.Publisher('bar_detector/other', Pose, queue_size=1)
         self.detection_img_pub = rospy.Publisher('bar_detector/detection_overlay', Image, queue_size=1)
 
-        self.update_ckpt_srv = rospy.Service('/flytware/bar_detection/update_ckpt', UpdateCkpt, self.update_ckpt_cb)
+        self.update_ckpt_srv = rospy.Service('/drone_proj/bar_detection/update_ckpt', UpdateCkpt, self.update_ckpt_cb)
         return True
 
     def get_inference_dl(self, input_img_data):       # with DL
@@ -526,8 +525,8 @@ class BarDetector:
             else:
                 req_gimbal_direction = self.pdp.gimbal_direction
         try:
-            rospy.wait_for_service('/flytos/gimbal_control/set_angle')
-            handle = rospy.ServiceProxy('/flytos/gimbal_control/set_angle', GimbalSet)
+            rospy.wait_for_service('/drone/gimbal_control/set_angle')
+            handle = rospy.ServiceProxy('/drone/gimbal_control/set_angle', GimbalSet)
             # rospy.loginfo("Gimbal Set called: Roll: %f, Pitch: %f, Yaw: %f" % (roll, pitch, yaw))
             if self.pdp.gimbal_direction != req_gimbal_direction:
                 print("[bar_detector] set angle to 0")
