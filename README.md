@@ -30,8 +30,6 @@ This project contains a ROS package written for pose estimation in a structured 
 
 - Input2: Inference from Vertical beam detector model.
 
-<img src="https://github.com/HrushikeshBudhale/pose-estimation-using-geometry/blob/main/docs/v_input_from_dl.png?raw=true" width="640" alt="Open loop pic">
-
 ## Output
 - This package generates odometry output containing X, Y, Z and Yaw of the robot.
 - This package also provides estimate of Aisle width (one of the known structural value) which can be used as a metric of confidence at that timestamp.
