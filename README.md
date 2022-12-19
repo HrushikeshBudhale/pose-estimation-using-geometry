@@ -16,8 +16,6 @@
 
 This project contains a ROS package written for pose estimation in a structured environment using visual odometry from single monocular camera and knowledge about the surrounding environment. This package makes use of projective geometry and predictive filtering for achieving centimeter level accuracy in pose estimation.
 
-<img src="https://github.com/HrushikeshBudhale/pose-estimation-using-geometry/blob/main/docs/processed_image.gif?raw=true" width="640" alt="Open loop pic">
-
 ## How it works?
 1. This package receives 2 gray scale images after inference from a DL model which segments vertical and horizontal beams visible in the camera frame.
 
@@ -29,10 +27,6 @@ This project contains a ROS package written for pose estimation in a structured 
 
 ## Input
 - Input1: Inference from Horizontal beam detector model.
-
-<img src="https://github.com/HrushikeshBudhale/pose-estimation-using-geometry/blob/main/docs/h_input_from_dl.png?raw=true" width="640" alt="Open loop pic">
-
-<!-- <img src="https://github.com/HrushikeshBudhale/pose-estimation-using-geometry/blob/main/docs/warehouse-building.png?raw=true" width="340" alt="Open loop pic"> -->
 
 - Input2: Inference from Vertical beam detector model.
 
